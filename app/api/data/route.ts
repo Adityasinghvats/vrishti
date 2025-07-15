@@ -92,12 +92,6 @@ export async function GET(request: Request) {
                console.warn('⚠️  MISMATCH: Backend claims', data.total_points, 'total points but sent', data.radar_plots.length, 'points');
            }
        }
-       
-       // Check if radar_plots array seems complete
-       if (data.radar_plots.length > 0) {
-         console.log('First radar plot:', data.radar_plots[0]);
-         console.log('Last radar plot:', data.radar_plots[data.radar_plots.length - 1]);
-       }
 
        if (!data || !data.radar_plots || !Array.isArray(data.radar_plots)) {
            console.log('Data validation failed - no radar_plots array found');

@@ -487,7 +487,7 @@ function MapControls({
   const [searchMode, setSearchMode] = useState<'text' | 'coordinates'>('text');
 
   return (
-    <div className="absolute top-4 left-4 z-[1000] space-y-4">
+    <div className="absolute w-96 sm:w-auto top-4 left-4 z-[1000] space-y-4">
       <Card className="p-4 bg-white/90 backdrop-blur-md shadow-xl border-0">
         <div className="space-y-4">
           {/* Data Status and Refresh */}
@@ -1331,7 +1331,7 @@ export default function MapView({ initialRadarData }: { initialRadarData?: Radar
       <GlobeLegend is3D={is3D} />
       
       {/* Status Bar */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-[1000]">
+      <div className="absolute bottom-4 w-screen sm:w-auto left-1/2 transform -translate-x-1/2 z-[1000]">
         <Card className="px-4 py-2 bg-black/20 backdrop-blur-md border-0 text-white">
           <div className="flex items-center space-x-4 text-sm">
             <div className="flex items-center space-x-1">
@@ -1344,13 +1344,7 @@ export default function MapView({ initialRadarData }: { initialRadarData?: Radar
               )}
             </div>
             <Separator orientation="vertical" className="h-4 bg-white/30" />
-            <div className="flex items-center space-x-1">
-              <span className="text-xs">
-                Zoom: {mapZoom} {mapZoom < MIN_ZOOM_FOR_INDIVIDUAL_MARKERS ? '(Clustered)' : '(Individual)'}
-              </span>
-            </div>
-            <Separator orientation="vertical" className="h-4 bg-white/30" />
-            <span>{is3D ? '3D Globe View' : '2D Map View'}</span>
+            <span>{is3D ? '3D View' : '2D View'}</span>
             {dataMetadata && (
               <>
                 <Separator orientation="vertical" className="h-4 bg-white/30" />
@@ -1389,7 +1383,7 @@ function GlobeLegend({ is3D }: { is3D: boolean }) {
   ];
 
   return (
-    <Card className="absolute bottom-36 right-4 bg-white/90 backdrop-blur-md shadow-xl border-0 z-[1000] max-w-xs">
+    <Card className="absolute invisible sm:visible bottom-36 right-4 bg-white/90 backdrop-blur-md shadow-xl border-0 z-[1000] max-w-xs">
       <div className="p-4">
         <h3 className="font-semibold text-gray-800 mb-3 text-sm">Reflectivity Scale</h3>
         <div className="space-y-2">

@@ -43,8 +43,8 @@ export async function GET(request: Request) {
     try {
        const { searchParams } = new URL(request.url);
        const fileId = searchParams.get('fileId');
-       
-       let backendUrl = 'http://localhost:8000/api/v1/data';
+
+       let backendUrl = `${process.env.BACKEND_URL}/api/v1/data`;
        if (fileId) {
            backendUrl += `?file_id=${fileId}`;
        }

@@ -18,8 +18,8 @@ export async function GET() {
         
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
-        
-        const response = await fetch('http://localhost:8000/api/v1/files', {
+
+        const response = await fetch(`${process.env.BACKEND_URL}/api/v1/files`, {
             signal: controller.signal,
             headers: {
                 'Accept': 'application/json',

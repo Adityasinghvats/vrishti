@@ -794,8 +794,7 @@ export default function MapView({ initialRadarData }: { initialRadarData?: Radar
 
   // Simple marker clustering for performance - enhanced to show ALL points
   const clusterNearbyMarkers = useCallback((locations: Location[], zoomLevel: number = 5) => {
-    // Always return all points - no minimum threshold
-    console.log(`Clustering ${locations.length} points at zoom level ${zoomLevel}`);
+
     
     // Calculate proper grid size based on the actual data extent and zoom level
     const lats = locations.map(loc => loc.lat);
@@ -808,7 +807,6 @@ export default function MapView({ initialRadarData }: { initialRadarData?: Radar
     const zoomFactor = Math.pow(2, Math.max(0, zoomLevel - 8));
     const gridSize = Math.max(0.0005, baseGridSize / zoomFactor); // Smaller minimum grid size
     
-    console.log(`Clustering with grid size: ${gridSize.toFixed(6)}, zoom: ${zoomLevel}, data range: ${latRange.toFixed(6)}x${lngRange.toFixed(6)}`);
     
     const clusters: { [key: string]: Location[] } = {};
     
@@ -849,8 +847,7 @@ export default function MapView({ initialRadarData }: { initialRadarData?: Radar
         clusterPoints: cluster // Store original points for detailed popup
       };
     }).flat(); // Flatten to handle individual points returned as arrays
-    
-    console.log(`Created ${clusteredPoints.length} clusters/points from ${locations.length} original points`);
+
     
     return clusteredPoints;
   }, []);
@@ -867,7 +864,6 @@ export default function MapView({ initialRadarData }: { initialRadarData?: Radar
       setError(null);
       
       const url = fileId ? `/api/data?fileId=${fileId}` : '/api/data';
-      console.log('Fetching data from:', url);
       
       const response = await fetch(url);
       
@@ -882,10 +878,6 @@ export default function MapView({ initialRadarData }: { initialRadarData?: Radar
       }
       
       if (data.locations && Array.isArray(data.locations)) {
-        // Debug: Log the first few locations to check coordinate format
-        console.log('First 10 locations from API:', data.locations.slice(0, 10));
-        console.log('Sample location structure:', data.locations[0]);
-        
         setAllLocations(data.locations);
         setFilteredLocations(data.locations);
         setDataMetadata(data.metadata || null);
@@ -895,10 +887,6 @@ export default function MapView({ initialRadarData }: { initialRadarData?: Radar
         setSearchTerm('');
         setTargetCoordinates(null);
         setSelectedLocation(null);
-        
-        if (data.metadata) {
-          console.log('File metadata:', data.metadata);
-        }
       } else {
         // Fallback to sample data if API doesn't return expected format
         console.warn('API returned unexpected format, using sample data');
@@ -1001,46 +989,18 @@ export default function MapView({ initialRadarData }: { initialRadarData?: Radar
     let locations = filteredLocations;
     
     if (locations.length > 0) {
-      console.log('Raw locations sample:', locations.slice(0, 5));
-      
       // Analyze coordinate distribution
       const lats = locations.map(loc => loc.lat);
       const lngs = locations.map(loc => loc.lng);
       const latSpread = Math.max(...lats) - Math.min(...lats);
-      const lngSpread = Math.max(...lngs) - Math.min(...lngs);
-      
-      console.log('Location coordinate analysis:', {
-        total: locations.length,
-        first: { lat: locations[0]?.lat, lng: locations[0]?.lng },
-        hasValidCoords: locations.every(loc => 
-          typeof loc.lat === 'number' && typeof loc.lng === 'number' && 
-          !isNaN(loc.lat) && !isNaN(loc.lng)
-        ),
-        geographicSpread: {
-          latSpread: latSpread,
-          lngSpread: lngSpread,
-          totalSpread: latSpread + lngSpread
-        },
-        bounds: {
-          north: Math.max(...lats),
-          south: Math.min(...lats),
-          east: Math.max(...lngs),
-          west: Math.min(...lngs)
-        }
-      });
-      
-      
+      const lngSpread = Math.max(...lngs) - Math.min(...lngs); 
     }
     
     // Apply clustering for performance while ensuring ALL data is represented
     if (shouldUseCluster && locations.length > 100) {
       const clusteredData = clusterNearbyMarkers(locations, mapZoom);
-      console.log(`Applied clustering: ${locations.length} → ${clusteredData.length} rendered items (zoom: ${mapZoom})`);
       return clusteredData;
     }
-    
-    // For smaller datasets or high zoom, show all points individually
-    console.log(`Showing all ${locations.length} points individually`);
     return locations;
   }, [filteredLocations, mapZoom, shouldUseCluster, clusterNearbyMarkers]);
 
@@ -1062,7 +1022,6 @@ export default function MapView({ initialRadarData }: { initialRadarData?: Radar
       
       if (data.files && Array.isArray(data.files)) {
         setAvailableFiles(data.files);
-        console.log('Available files loaded:', data.files.length);
       } else {
         console.warn('No files found in response');
         setAvailableFiles([]);
@@ -1191,7 +1150,6 @@ export default function MapView({ initialRadarData }: { initialRadarData?: Radar
               const lngs = locationsToRender.map(loc => loc.lng);
               const centerLat = (Math.min(...lats) + Math.max(...lats)) / 2;
               const centerLng = (Math.min(...lngs) + Math.max(...lngs)) / 2;
-              console.log('Map center calculated:', { centerLat, centerLng });
               return [centerLat, centerLng];
             }
             return [22.5726, 88.3639]; // Default to Kolkata

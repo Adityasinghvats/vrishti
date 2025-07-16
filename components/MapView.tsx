@@ -487,7 +487,7 @@ function MapControls({
   const [searchMode, setSearchMode] = useState<'text' | 'coordinates'>('text');
 
   return (
-    <div className="absolute w-96 sm:w-auto top-4 left-4 z-[1000] space-y-4">
+    <div className="absolute h-16 sm:h-auto sm:max-w-sm w-auto top-4 left-4 right-4 z-[1000] space-y-2">
       <Card className="p-4 bg-white/90 backdrop-blur-md shadow-xl border-0">
         <div className="space-y-4">
           {/* Data Status and Refresh */}
@@ -638,17 +638,6 @@ function MapControls({
               Rainfall Rate
             </Badge>
           </div>
-          
-          <div className="mt-2 text-xs text-gray-500">
-            💡 Zoom in (level 12+) to see individual markers
-          </div>
-        </div>
-      </Card>
-      
-      <Card className="p-3 bg-white/90 backdrop-blur-md shadow-xl border-0">
-        <div className="flex items-center space-x-2 text-sm text-gray-600">
-          <Compass className="h-4 w-4" />
-          <span>{is3D ? '3D Interactive Globe' : '2D Interactive Map'}</span>
         </div>
       </Card>
     </div>
@@ -1383,14 +1372,14 @@ function GlobeLegend({ is3D }: { is3D: boolean }) {
   ];
 
   return (
-    <Card className="absolute invisible sm:visible bottom-36 right-4 bg-white/90 backdrop-blur-md shadow-xl border-0 z-[1000] max-w-xs">
-      <div className="p-4">
-        <h3 className="font-semibold text-gray-800 mb-3 text-sm">Reflectivity Scale</h3>
-        <div className="space-y-2">
+    <Card className="absolute invisible sm:visible bottom-24 md:bottom-4 right-4 bg-white/90 backdrop-blur-md shadow-xl border-0 z-[1000] max-w-xs">
+      <div className="p-2">
+        <h3 className="font-semibold text-gray-800 mb-2 text-sm">Reflectivity Scale</h3>
+        <div className="space-y-1">
           {legendItems.map((item, index) => (
-            <div key={index} className="flex items-center space-x-2 text-xs">
+            <div key={index} className="flex items-center space-x-1 text-xs">
               <div 
-                className="w-3 h-3 rounded-full border border-gray-300" 
+                className="w-2 h-2 rounded-full border border-gray-300" 
                 style={{ backgroundColor: item.color }}
               />
               <div className="flex-1">
@@ -1400,7 +1389,7 @@ function GlobeLegend({ is3D }: { is3D: boolean }) {
             </div>
           ))}
         </div>
-        <div className="mt-3 pt-2 border-t border-gray-200 text-xs text-gray-600">
+        <div className="mt-2 pt-1 border-t border-gray-200 text-xs text-gray-600">
           <div><strong>Height:</strong> Rainfall Rate (mm/h)</div>
           <div><strong>Color:</strong> Reflectivity (dBZ)</div>
         </div>

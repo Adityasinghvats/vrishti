@@ -13,6 +13,12 @@ Creating informative and user friendly visualisation of Raw Data in form of Vol 
 
 ## How the application looks like ? 🤔
 
+<img width="1898" height="834" alt="Screenshot 2025-07-01 145958" src="https://github.com/user-attachments/assets/7c93a786-e06e-426e-b3e5-04af09b3e4a3" />
+<img width="1919" height="822" alt="Screenshot 2025-07-15 192422" src="https://github.com/user-attachments/assets/23b23ca8-abf6-4573-acbf-2ec44eeba1ca" />
+<img width="1917" height="837" alt="Screenshot 2025-07-15 192317" src="https://github.com/user-attachments/assets/ca6c9488-c023-48e1-b5c7-742a245e4687" />
+
+
+
 ## Getting Started 🙌
 
 1. **Clone the repository:**
